@@ -1,0 +1,9 @@
+local tArgs = {...}
+if #tArgs~=1 then
+  print("Usage: cat <file>")
+  error("",0)
+end
+local h = fs.open(tArgs[1],"r")
+if not h then error("File not found",0) end
+print(h.readAll())
+h.close()
