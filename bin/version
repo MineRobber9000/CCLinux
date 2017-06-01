@@ -1,0 +1,5 @@
+if os.exploited then
+  print("CCLinux 0.1b")
+else
+  print("CraftOS 1.7")
+end

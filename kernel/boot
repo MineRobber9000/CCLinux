@@ -1,0 +1,29 @@
+--TLCO
+local tlco_lp = {
+  function() os.run({},"/rom/programs/shell") end
+}
+local prevState = {}
+prevState.shutdown = function() end
+local function recover()
+  --Fix os.shutdown
+  os.shutdown = prevState.shutdown
+  --Ditch rednet
+  _G["rednet"] = nil
+end
+local function _os_shutdown()
+  recover()
+  term.clear()
+  term.setCursorPos(1,1)
+  os.exploited = true
+  parallel.waitForAny(unpack(tlco_lp))
+  os.shutdown()
+end
+local function inject()
+  prevState.shutdown = os.shutdown
+  os.shutdown = _os_shutdown
+end
+local function exploit()
+  inject()
+  shell.exit()
+end
+exploit()
