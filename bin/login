@@ -1,0 +1,26 @@
+os.loadAPI("/kernel/sha256")
+term.clear()
+term.setCursorPos(1,1)
+if term.isColor() then term.setTextColor(colors.yellow) end
+print(os.version()..": Login")
+if term.isColor() then term.setTextColor(colors.white) end
+write("Username: ")
+local user = read()
+write("Password: ")
+local pass = read("")
+local h = fs.open("/etc/passwd","r")
+local passwd = textutils.unserialize(h.readAll())
+h.close()
+if next(passwd)==nil then return "root","" end
+if passwd[user] == nil then
+  printError("Invalid user or password")
+  sleep(3)
+  os.shutdown()
+else
+  if passwd[user].pass ~= sha256.sha256(pass) then
+    printError("Invalid user or password")
+    sleep(3)
+    os.shutdown()
+  end
+end
+return user, passwd[user].homedir

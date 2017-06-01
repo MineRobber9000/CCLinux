@@ -1,0 +1,14 @@
+os.loadAPI("/kernel/sha256")
+local h = fs.open("/etc/passwd","r")
+local passwd = textutils.unserialise(h.readAll())
+h.close()
+write("Username: ")
+local name = read()
+passwd[name] = {}
+passwd[name].homedir = "home/"..name
+if not fs.exists(passwd[name].homedir) then fs.makeDir(passwd[name].homedir) end
+write("Password: ")
+passwd[name].pass = sha256.sha256(read(""))
+h = fs.open("/etc/passwd","w")
+h.write(textutils.serialise(passwd))
+h.close()
