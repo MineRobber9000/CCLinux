@@ -1,0 +1,15 @@
+prevState = {}
+prevState.isCCLinux = os.isCCLinux
+prevState.version = os.version
+prevState.dir = shell.dir()
+os.isCCLinux = nil
+os.version = function() return "CraftOS 1.7" end
+term.clear()
+term.setCursorPos(1,1)
+shell.setDir("")
+shell.run("shell")
+term.clear()
+term.setCursorPos(1,1)
+os.isCCLinux = prevState.isCCLinux
+os.version = prevState.version
+shell.setDir(prevState.dir)
