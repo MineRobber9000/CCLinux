@@ -1,6 +1,6 @@
 --TLCO
 local tlco_lp = {
-  function() os.run({},"/rom/programs/shell") end
+  function() os.run({},"/kernel/bash") end
 }
 local prevState = {}
 prevState.shutdown = function() end
@@ -14,7 +14,8 @@ local function _os_shutdown()
   recover()
   term.clear()
   term.setCursorPos(1,1)
-  os.exploited = true
+  os.isCCLinux = function() return true end
+  os.version = function() return "CCLinux v0.1b" end
   parallel.waitForAny(unpack(tlco_lp))
   os.shutdown()
 end
