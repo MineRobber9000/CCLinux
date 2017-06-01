@@ -334,7 +334,7 @@ else
         term.setBackgroundColor( bgColour )
         term.setTextColour( promptColour )
         if bash.user()~="root" then
-          write( string.gsub(bash.dir(),bash.curHomeDir,"~") .. "> " )
+          write( string.gsub(bash.dir(),bash.curHomeDir(),"~") .. "> " )
         else
           write( bash.dir() .. "> " )
         end
