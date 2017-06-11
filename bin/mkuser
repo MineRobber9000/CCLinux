@@ -1,3 +1,4 @@
+if bash.user() ~= "root" then error("Access denied",0) end
 os.loadAPI("/kernel/sha256")
 local h = fs.open("/etc/passwd","r")
 local passwd = textutils.unserialise(h.readAll())
