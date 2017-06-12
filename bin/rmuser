@@ -1,0 +1,15 @@
+if bash.user() ~= "root" then error("Access denied",0) end
+local h = fs.open("/etc/passwd","r")
+local passwd = textutils.unserialise(h.readAll())
+h.close()
+write("Username: ")
+local name = read()
+print("Deleting home directory...")
+fs.delete(passwd[name].homedir)
+print("Removing /etc/passwd entry...")
+passwd[name] = nil
+print("Writing changes to /etc/passwd...")
+h = fs.open("/etc/passwd","w")
+h.write(textutils.serialise(passwd))
+h.close()
+print("Done!")
